@@ -13,8 +13,8 @@ function [netMat_betas] = PCmultregressionconnectivity(activityMatrix)
 %mwcole@mwcole.net
 %http://www.colelab.org
 %
-%Version 1.0
-%2016-08-24
+%Version 1.1
+%2016-08-30
 
 numRegions=size(activityMatrix,1);
 netMat_betas=zeros(numRegions,numRegions);
@@ -27,7 +27,7 @@ for targetRegion=1:numRegions
     otherRegions(targetRegion)=[];
 
     %Run PCA
-    numComponents=size(activityMatrix,1)-1;
+    numComponents=min(size(activityMatrix,1)-1,size(activityMatrix,2)-1);
     [PCALoadings,PCAScores] = pca(activityMatrix(otherRegions,:)','NumComponents',numComponents);
 
     %PCA regression to calculate FC
