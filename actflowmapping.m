@@ -25,10 +25,29 @@ function [r_overall, p_overall, t_overall, r_bytask, p_bytask, taskActualMatrix,
 %mwcole@mwcole.net
 %http://www.colelab.org
 %
-%Version 1.0
-%2016-08-24
+%Version 1.1
+%2016-10-27
+%
+%Version history:
+%1.0: Initial version
+%1.1: Added error messages and warning messages when input data are not formatted appropriately
 %
 
+if ndims(connMatrix)==3
+    msg='The connectivity matrix should be 4 dimensions (regions X regions X states X subjects). An empty third dimension is being added (assuming you have only a single connectivity state per subject (e.g., resting-state or structural connectivity data))';
+    warning(msg);
+    connMatrix_orig=connMatrix;
+    connMatrix=zeros(size(connMatrix_orig,1),size(connMatrix_orig,2),1,size(connMatrix_orig,3));
+    connMatrix(:,:,1,:)=connMatrix_orig;
+elseif ndims(connMatrix)<3
+    msg='The connectivity matrix should be 4 dimensions (regions X regions X states X subjects)';
+    error(msg);
+end
+if ndims(taskActMatrix)<3
+    msg='The task activity matrix must be 3 dimensions (regions X states/tasks X subjects)';
+    error(msg);
+end
+    
 numTasks=size(taskActMatrix,2);
 numRegions=size(taskActMatrix,1);
 numConnStates=size(connMatrix,3);
