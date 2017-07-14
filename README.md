@@ -1,2 +1,2 @@
 # actflowmapping
-Data analysis code associated with Cole et al. (2016), Nature Neuroscience (http://rdcu.be/kOJq)
+Data analysis code associated with Cole et al. (2016), Nature Neuroscience (http://www.colelab.org/#Cole2016ActFlow)
